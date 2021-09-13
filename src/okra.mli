@@ -20,3 +20,4 @@ module Aggregate = Aggregate
 module Activity = Activity
 module Calendar = Calendar
 module Lint = Lint
+module Spec = Spec
