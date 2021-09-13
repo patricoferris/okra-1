@@ -1,5 +1,6 @@
 module Kr = struct
   type schedule = Quarterly of [ `Q1 | `Q2 | `Q3 | `Q4 ] * int | Rolling
+  [@@deriving yojson]
 
   type status =
     | Scheduled of schedule
@@ -8,6 +9,7 @@ module Kr = struct
     | Active
     | Unfunded
     | Blocked
+  [@@deriving yojson]
 
   let quarter_of_string = function
     | "q1" -> `Q1
@@ -40,6 +42,7 @@ module Kr = struct
     ident : string;
     status : status;
   }
+  [@@deriving yojson]
 
   let v ~status s =
     let get_owner_or_ident s =
@@ -63,7 +66,7 @@ module Kr = struct
 end
 
 module Objective = struct
-  type t = { title : string; krs : Kr.t list }
+  type t = { title : string; krs : Kr.t list } [@@deriving yojson]
 
   let of_block b =
     let of_paragraph ~status = function
@@ -90,6 +93,7 @@ end
 
 module Project = struct
   type t = { project : string; objectives : Objective.t list }
+  [@@deriving yojson]
 
   let of_block b =
     let rec objectives acc = function
@@ -104,7 +108,7 @@ module Project = struct
     | _ -> failwith "Failed to parse project"
 end
 
-type t = Project.t list
+type t = Project.t list [@@deriving yojson]
 
 let of_block b =
   let rec projects acc = function

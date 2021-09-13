@@ -1,4 +1,6 @@
 (library
  (name okra)
  (public_name okra)
- (libraries omd fmt str calendar cohttp-lwt-unix get-activity))
+ (libraries omd fmt str calendar cohttp-lwt-unix get-activity)
+ (preprocess
+  (pps ppx_deriving_yojson)))
